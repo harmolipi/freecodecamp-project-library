@@ -40,7 +40,7 @@ suite('Functional Tests', function() {
                         .send({ title: 'Laurus' })
                         .end((err, res) => {
                             assert.equal(res.status, 200);
-                            assert.property(res.body[0], '_id', 'Has _id in response');
+                            assert.property(res.body, '_id');
                             assert.equal(res.body.title, 'Laurus', 'Has book title in response')
                             done();
                         });

@@ -5,7 +5,6 @@ exports.books_view_get = (req, res, title) => {
 };
 
 exports.books_create_post = (req, res, title) => {
-    console.log('title is', title);
     const book = new Book({
         title: req.body.title,
     });
