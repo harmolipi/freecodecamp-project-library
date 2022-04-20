@@ -1,7 +1,11 @@
 const Book = require('../models/book');
 
 exports.books_view_get = (req, res) => {
-  res.send('NOT IMPLEMENTED YET');
+    Book.find({}, (err, books) => {
+        if (err) return res.json(err);
+
+        return res.status(200).json(books);
+    })
 };
 
 exports.books_create_post = (req, res, title) => {
