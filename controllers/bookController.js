@@ -5,6 +5,8 @@ exports.books_view_get = (req, res, title) => {
 };
 
 exports.books_create_post = (req, res, title) => {
+    if (!title) return res.status(400).json({ error: 'No title given' });
+    
     const book = new Book({
         title: req.body.title,
     });
