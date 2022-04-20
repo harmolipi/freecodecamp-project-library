@@ -36,7 +36,7 @@ suite('Functional Tests', function() {
                 test('Test POST /api/books with title', function(done) {
                     chai
                         .request(server)
-                        .get('/api/books')
+                        .post('/api/books')
                         .send({ title: 'Laurus' })
                         .end((err, res) => {
                             assert.equal(res.status, 200);
@@ -49,7 +49,7 @@ suite('Functional Tests', function() {
                 test('Test POST /api/books with no title given', function(done) {
                     chai
                         .request(server)
-                        .get('/api/books')
+                        .post('/api/books')
                         .send({})
                         .end((err, res) => {
                             assert.equal(res.status, 400);

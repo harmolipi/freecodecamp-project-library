@@ -22,7 +22,7 @@ module.exports = function (app) {
     .post(function (req, res){
       let title = req.body.title;
       //response will contain new book object including atleast _id and title
-      book_controller.book_create_post(req, res, title);
+      book_controller.books_create_post(req, res, title);
     })
     
     .delete(function(req, res){

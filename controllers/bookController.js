@@ -5,15 +5,16 @@ exports.books_view_get = (req, res, title) => {
 };
 
 exports.books_create_post = (req, res, title) => {
+    console.log('title is', title);
     const book = new Book({
         title: req.body.title,
     });
 
-    book.save((err) => {
+    book.save((err, book) => {
         if (err) {
             return res.send(err);
         }
-        return res.json({ message: 'Book created!' });
+        return res.status(200).json({ title: book.title, _id: book._id });
     });
 };
 
