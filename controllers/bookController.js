@@ -1,6 +1,6 @@
 const Book = require('../models/book');
 
-exports.books_view_get = (req, res, title) => {
+exports.books_view_get = (req, res) => {
   res.send('NOT IMPLEMENTED YET');
 };
 
