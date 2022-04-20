@@ -7,6 +7,12 @@ const BookSchema = new Schema({
     required: true,
   },
   comment: [String],
-})
+});
+
+BookSchema
+    .virtual('commentcount')
+    .get(function() {
+        return this.comment.length;
+    });
 
 module.exports = mongoose.model('Book', BookSchema);
