@@ -53,7 +53,7 @@ suite('Functional Tests', function() {
                         .send({})
                         .end((err, res) => {
                             assert.equal(res.status, 400);
-                            assert.equal(res.body.error, 'No title given');
+                            assert.equal(res.body.err, 'No title given');
                             done();
                         });
                 });
@@ -123,7 +123,7 @@ suite('Functional Tests', function() {
                         .post(`/api/books/${id1}`)
                         .end((err, res) => {
                             assert.equal(res.status, 400);
-                            assert.equal(res.body.error, 'Missing required field: comment');
+                            assert.equal(res.body.err, 'Missing required field: comment');
                             done();
                         });
                 });
@@ -131,10 +131,11 @@ suite('Functional Tests', function() {
                 test('Test POST /api/books/[id] with comment, id not in db', function(done) {
                     chai
                         .request(server)
-                        .post('/api/books/123')
+                        .post('/api/books/111111111111111111111111')
+                        .send({comment: 'This is my comment!'})
                         .end((err, res) => {
                             assert.equal(res.status, 400);
-                            assert.equal(res.body.error, "Book doesn't exist");
+                            assert.equal(res.body.err, "Book doesn't exist");
                             done();
                         });
                 });
@@ -157,10 +158,10 @@ suite('Functional Tests', function() {
             test('Test DELETE /api/books/[id] with id not in db', function(done) {
                 chai
                     .request(server)
-                    .delete('/api/books/123')
+                    .delete('/api/books/111111111111111111111111')
                     .end((err, res) => {
                         assert.equal(res.status, 400);
-                        assert.equal(res.body.error, "Book doesn't exist");
+                        assert.equal(res.body.err, "Book doesn't exist");
                         done();
                     });
             });
