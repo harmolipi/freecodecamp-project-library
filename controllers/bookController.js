@@ -31,11 +31,12 @@ exports.books_remove_delete = async (req, res) => {
 exports.book_view_get = (req, res, bookid) => {
     Book.findById(bookid, (err, book) => {
         if (!book) {
-            return res.status(400).json({ err: 'Invalid id' });
+            return res.status(200).send('no book exists');
         } else if (err) {
             return res.status(400).json({ err });
         }
-        return res.status(200).json(book);
+        const { title, _id, comments } = book;
+        return res.status(200).json({title, _id, comments});
     });
 };
 
@@ -46,7 +47,7 @@ exports.comment_create_post = async (req, res, bookid, comment) => {
     if (!book) return res.status(400).json({err: "Book doesn't exist"});
 
     try {
-        book.comment.push(comment);
+        book.comments.push(comment);
         book.commentcount += 1;
         await book.save();
         return res.status(200).json(book);       

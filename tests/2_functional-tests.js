@@ -80,10 +80,10 @@ suite('Functional Tests', function() {
             test('Test GET /api/books/[id] with id not in db', function(done) {
                 chai
                     .request(server)
-                    .get('/api/books/123')
+                    .get('/api/books/111111111111111111111111')
                     .end((err, res) => {
-                        assert.equal(res.status, 400);
-                        assert.equal(res.body.err, 'Invalid id', 'Invalid id given');
+                        assert.equal(res.status, 200);
+                        assert.equal(res.text, 'no book exists', 'Book not found');
                         done();
                     })
             });
