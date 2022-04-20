@@ -19,13 +19,13 @@ exports.books_create_post = (req, res, title) => {
         if (err) {
             return res.send(err);
         }
-        return res.status(200).json({ title: book.title, _id: book._id });
+        return res.status(200).json({ title: book.title, _id: book._id, comments: book.comments, commentcount: book.commentcount });
     });
 };
 
 exports.books_remove_delete = async (req, res) => {
     await Book.deleteMany({});
-    return res.status(200).json({result: 'All books successfully deleted'});
+    return res.status(200).send('complete delete successful');
 };
 
 exports.book_view_get = (req, res, bookid) => {
@@ -41,10 +41,10 @@ exports.book_view_get = (req, res, bookid) => {
 };
 
 exports.comment_create_post = async (req, res, bookid, comment) => {
-    if (!comment) return res.status(400).json({err: 'Missing required field: comment'});
+    if (!comment) return res.status(200).send('missing required field comment');
     const book = await Book.findById(bookid);
 
-    if (!book) return res.status(400).json({err: "Book doesn't exist"});
+    if (!book) return res.status(200).send('no book exists');
 
     try {
         book.comments.push(comment);
@@ -60,9 +60,9 @@ exports.book_remove_delete = async (req, res, bookid) => {
     const book = await Book.findById(bookid);
 
     if (!book) {
-        return res.status(400).json({ err: "Book doesn't exist" });
+        return res.status(200).send('no book exists');
     }
 
     await book.remove();
-    return res.status(200).json({ _id: bookid, result: 'Book successfully deleted' });
+    return res.status(200).send('delete successful');
 };

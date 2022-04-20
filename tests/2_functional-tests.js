@@ -122,8 +122,8 @@ suite('Functional Tests', function() {
                         .request(server)
                         .post(`/api/books/${id1}`)
                         .end((err, res) => {
-                            assert.equal(res.status, 400);
-                            assert.equal(res.body.err, 'Missing required field: comment');
+                            assert.equal(res.status, 200);
+                            assert.equal(res.text, 'missing required field comment');
                             done();
                         });
                 });
@@ -134,8 +134,8 @@ suite('Functional Tests', function() {
                         .post('/api/books/111111111111111111111111')
                         .send({comment: 'This is my comment!'})
                         .end((err, res) => {
-                            assert.equal(res.status, 400);
-                            assert.equal(res.body.err, "Book doesn't exist");
+                            assert.equal(res.status, 200);
+                            assert.equal(res.text, 'no book exists');
                             done();
                         });
                 });
@@ -149,8 +149,7 @@ suite('Functional Tests', function() {
                     .delete(`/api/books/${id1}`)
                     .end((err, res) => {
                         assert.equal(res.status, 200);
-                        assert.equal(res.body._id, id1);
-                        assert.equal(res.body.result, 'Book successfully deleted');
+                        assert.equal(res.text, 'delete successful');
                         done();
                     });
             });
@@ -160,8 +159,8 @@ suite('Functional Tests', function() {
                     .request(server)
                     .delete('/api/books/111111111111111111111111')
                     .end((err, res) => {
-                        assert.equal(res.status, 400);
-                        assert.equal(res.body.err, "Book doesn't exist");
+                        assert.equal(res.status, 200);
+                        assert.equal(res.text, 'no book exists');
                         done();
                     });
             });
