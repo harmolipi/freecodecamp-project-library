@@ -28,7 +28,14 @@ exports.books_remove_delete = (req, res) => {
 };
 
 exports.book_view_get = (req, res, bookid) => {
-  res.send('NOT IMPLEMENTED YET')
+    Book.findById(bookid, (err, book) => {
+        if (!book) {
+            return res.status(400).json({ err: 'Invalid id' });
+        } else if (err) {
+            return res.status(400).json({ err });
+        }
+        return res.status(200).json(book);
+    });
 };
 
 exports.comment_create_post = (req, res, bookid, comment) => {

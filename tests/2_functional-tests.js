@@ -83,42 +83,38 @@ suite('Functional Tests', function() {
                     .get('/api/books/123')
                     .end((err, res) => {
                         assert.equal(res.status, 400);
-                        assert.equal(res.error, 'Invalid id', 'Invalid id given');
-                        done()
+                        assert.equal(res.body.err, 'Invalid id', 'Invalid id given');
+                        done();
                     })
             });
 
-            test('Test GET /api/books/[id] with valid id in db', async function(done) {
+            test('Test GET /api/books/[id] with valid id in db', async () => {
                 const testBook = await Book.findById(id1);
     
-                chai
+                const res = await chai
                     .request(server)
-                    .get(`/api/books/${id1}`)
-                    .end((err, res) => {
-                        assert.equal(res.status, 200);
-                        assert.equal(res.body._id, id1);
-                        assert.equal(res.body.title, testBook._id);
-                        done();
-                    })
+                    .get(`/api/books/${id1}`);
+                
+                assert.equal(res.status, 200);
+                assert.equal(res.body._id, id1);
+                assert.equal(res.body.title, testBook.title);
             });
         });
 
         suite(
             'POST /api/books/[id] => add comment/expect book object with id',
             function() {
-                test('Test POST /api/books/[id] with comment', async function(done) {
+                test('Test POST /api/books/[id] with comment', async () => {
                     const testBook = await Book.findById(id1);
                     
-                    chai
+                    const res = await chai
                         .request(server)
                         .post(`/api/books/${id1}`)
-                        .send({comment: 'This book helped me reach Theosis'})
-                        .end((err, res) => {
-                            assert.equal(res.status, 200);
-                            assert.equal(res.body._id, id1);
-                            assert.equal(res.body.title, testBook.title);
-                            done();
-                        });
+                        .send({comment: 'This book helped me reach Theosis'});
+                    
+                    assert.equal(res.status, 200);
+                    assert.equal(res.body._id, id1);
+                    assert.equal(res.body.title, testBook.title);
                 });
 
                 test('Test POST /api/books/[id] without comment field', function(done) {
