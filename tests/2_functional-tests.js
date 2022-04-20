@@ -26,7 +26,7 @@ suite('Functional Tests', function() {
         await Book.deleteMany({});
 
         const book1 = new Book({
-            title: 'Laurus',
+            title: 'The Ascetical Homilies of St. Isaac the Syrian',
         });
 
         const saved1 = await book1.save();
@@ -74,19 +74,31 @@ suite('Functional Tests', function() {
                         .send({ title: 'Laurus' })
                         .end((err, res) => {
                             assert.equal(res.status, 200);
+                            assert.property(res.body[0], '_id', 'Has _id in response');
+                            assert.equal(res.body.title, 'Laurus', 'Has book title in response')
                             done();
                         });
                 });
 
                 test('Test POST /api/books with no title given', function(done) {
-                    //done();
+                    chai
+                        .request(server)
+                        .get('/api/books')
+                        .send({})
+                        .end((err, res) => {
+                            assert.equal(res.status, 400);
+                            assert.equal(res.body.error, 'No title given');
+                            done();
+                        });
                 });
             }
         );
 
         suite('GET /api/books => array of books', function() {
             test('Test GET /api/books', function(done) {
-                //done();
+                chai
+                    .request(server)
+                    .get('/api/books')
             });
         });
 
