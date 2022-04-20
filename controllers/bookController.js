@@ -9,7 +9,7 @@ exports.books_view_get = (req, res) => {
 };
 
 exports.books_create_post = (req, res, title) => {
-    if (!title) return res.status(400).json({ err: 'No title given' });
+    if (!title) return res.status(200).send('missing required field title');
     
     const book = new Book({
         title: req.body.title,
